@@ -1,0 +1,200 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="jisuanqi.css">
+</head>
+<body>
+	<input type="text" id="txt1" />
+	<select id="sel">
+	     <option value="+">+</option>
+	     <option value="-">-</option>
+	     <option value="*">*</option>
+	     <option value="/">/</option>
+	     <option value="sin">sin</option>
+	</select>
+	<input type="text" id="txt2" />
+	=
+	<input type="text" id="txt3" />
+	<input type="button" id="btn" value="计算" onclick="test()"/><br>
+	<br>
+	<input type="text" style="width:300px" />
+	<input type="button" value="计算" />结果：<span></span>
+	<script type="text/javascript" src="jisuanqi.js" ></script>
+	<script>
+	var span=document.querySelector("span");
+	document.querySelector("input[type=button]").addEventListener("click",function(){
+	    try{
+	        span.innerHTML=eval(document.querySelector("input[type=text]").value)||0;
+	    }catch(e){
+	        span.innerHTML="表达式不正确！";
+	    };
+	});
+	</script>
+</body>
+</html> -->
+<!Doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jisuanqi</title>
+	<link href="jisuanqi.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="all">
+		<form id="form1" name="form1" method="post" action="">
+			<table width="297" height="270" border="1" style="margin:opx;padding:opx;">
+				<tr>
+					<td height="52" colspan="4">
+						<input name="result" type="text" id="result" value="" style="width:100%;height:100%;" disabled="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td width="75">
+						<input type="button" value="1" onclick="getNum(this)" id=
+						"1" class="btn"/>
+					</td>
+					<td width="75">
+						<input type="button" value="2" onclick="getNum(this)" id="2" class="btn"/>
+					</td>
+					<td width="75">
+						<input type="button" value="3" onclick="getNum(this)" id="3" class="btn"/></td>
+					<td width="75" height="75">
+						<input type="button" value="+" onclick="yunsuan(this)" id="+" class="btn" style="color:#F00;"/>
+					</td>
+				</tr>
+				<tr>
+					<td width="75"><input type="button" value="4" onclick="getNum(this)" id=
+					"4" class="btn"/></td>
+					<td width="75"><input type="button" value="5" onclick="getNum(this)" id="5" class="btn"/></td>
+					<td width="75"><input type="button" value="6" onclick="getNum(this)" id="6" class="btn"/></td>
+					<td width="75" height="75"><input type="button" value="-" onclick="yunsuan(this)" id="-" class="btn" style="color:#F00;"/>
+					</td>
+				</tr>
+				<tr>
+					<td width="75"><input type="button" value="7" onclick="getNum(this)" id=
+					"7" class="btn"/>
+					</td>
+					<td width="75"><input type="button" value="8" onclick="getNum(this)" id="8" class="btn"/></td>
+					<td width="75"><input type="button" value="9" onclick="getNum(this)" id="9" class="btn"/></td>
+					<td width="105" height="75"><input type="button" value="*" onclick="yunsuan(this)" id="*" class="btn" style="color:#F00;"/>
+					</td>
+				</tr>
+				<tr >
+					<td width="75"><input type="button" value="back" onclick="backspace()" id=
+					"back" class="btn" style="color:#F00;"/>
+					</td>
+					<td width="75" height="75"><input type="button" value="clear" onclick="clearresult()" id="clear" class="btn" style="color:#F00;"/>
+					</td>
+					<td  width="75" style="text-align:center;"><input type="button" value="=" onclick="resultNum()" id="btn1" class="btn1" />
+					</td>
+					<td width="75" height="75"><input type="button" value="/" onclick="yunsuan(this)" id="/" class="btn" style="color: #F00;"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<script>
+		//运算表达式
+		var flag=0;
+		var first="";
+		//tem是临时变量
+		var tem="";
+		function clearresult(){
+			document.getElementById("result").value="";
+			first="";
+			document.getElementById("+").disabled=false;
+			document.getElementById("-").disabled=false;
+			document.getElementById("*").disabled=false;
+			document.getElementById("/").disabled=false;
+			tem="";
+			first="";
+			flag="";
+		}
+		//退格函数
+		function backspace(){
+			if(tem=="")
+			{
+				return null;
+			}
+			else
+			{
+				var m=document.getElementById("result").value;
+				var m1=m.substring(0,m.length-1);
+				document.getElementById("result").value=m1;
+				tem=m1;
+			}
+		}
+
+		function resultNum(){
+			var second=parseInt(document.getElementById("result").value);
+			if(flag==0)
+			{
+				document.getElementById("result").value="";
+			}
+			else if(flag==1)
+			{
+				document.getElementById("result").value=first+second;
+			}
+			else if(flag==2)
+			{
+				document.getElementById("result").value=first-second;
+			}
+			else if(flag==3){
+				document.getElementById("result").value=first*second;
+			}
+			else if (flag==4) {
+				document.getElementById("result").value=first/second;
+			}
+			first="";
+			tem=document.getElementById("result").value;
+			flag=0;
+			document.getElementById("+").disabled=false;
+			document.getElementById("-").disabled=false;
+			document.getElementById("*").disabled=false;
+			document.getElementById("/").disabled=false;
+		}
+
+		function getNum(event){
+			var tmp=document.getElementById(event.id).value;
+			tem=tem+tmp;
+			document.getElementById("result").value=tem;
+		}
+		//函数运算
+		function yunsuan(event){
+			var sign=document.getElementById(event.id).value;
+			if(tem=="")
+			{
+				return null;
+			}
+			else{
+
+				if(sign=="+")
+				{
+					flag=1;
+				}else if(sign=="-")
+				{
+					flag=2;
+				}
+				else if(sign=="*")
+				{
+					flag=3;
+				}
+				else{
+					flag=4;
+				}
+				//用first保存第一个参数值
+				first=parseInt(document.getElementById("result").value);
+				document.getElementById("result").value="";
+				//临时变量清空
+				tem="";
+				document.getElementById("+").disabled=true;
+				document.getElementById("-").disabled=true;
+				document.getElementById("*").disabled=true;
+				document.getElementById("/").disabled=true;
+			}
+		}
+	</script>
+</body>
+</html>
